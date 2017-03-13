@@ -6,9 +6,12 @@ var nunjucks = require('nunjucks');
 var routes = require('./routes');
 var fs = require('fs');
 var path = require('path');
-var mime = require('mime');
+// var mime = require('mime');
 var bodyParser = require('body-parser');
+var server = require('http').createServer()
+
 var models = require('./models');
+
 // templating boilerplate setup
 app.engine('html', nunjucks.render); // how to render html templates
 app.set('view engine', 'html'); // what file extension do our templates have
@@ -27,8 +30,7 @@ app.use('/', routes);
 
 // start the server
 
-Page.sync();
-User.sync()
+
 
 
 models.User.sync({})
@@ -44,9 +46,11 @@ models.User.sync({})
 
 //Not sure if ^^^ we should wrap the listener on line 47 in this .sync or if server should be named app
 
-app.listen(3000, function(){
-  console.log('listening on port 1337');
-});
+
+
+// ^^ these syncs may be improperly configured
+
+
 
 // // manually-written static file middleware
 // app.use(function(req, res, next){

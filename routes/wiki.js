@@ -13,22 +13,40 @@ wikiRouter.get('/', function(req, res, next) {
 });
 
 wikiRouter.post('/', function(req, res, next) {
-	var title = req.body.title; 
+	var title = req.body.title;
 	var content = req.body.content;
 
-	var page = Page.create({
+	 Page.create({
 		title: title,
 		content: content
 	})
-	.then(function(){ res.redirect(page.urlTitle) })
-	
+	.then(function(results){ res.redirect(results.urlTitle) })
+
 });
 
 wikiRouter.get('/add', function(req, res, next) {
   res.render('addpage')
 });
 
+wikiRouter.get(':urlTitle', function(req, res, next){
+  res.send('hit dynamic route at' + res.body.params.urlTitle)
+})
 
+wikiRouter.get('/:urlTitle', function (req, res, next) {
+
+  Page.findOne({
+    where: {
+      urlTitle: req.params.urlTitle
+    }
+  })
+  .then(function(foundPage){
+    return  res.json(foundPage).then(function(result){
+      res.render('wikipage', {result: result.title, content: result.content})
+    });
+  })
+  .catch(next);
+
+});
 
 
 module.exports = wikiRouter

@@ -7,11 +7,21 @@ var Page = db.define('page', {
         type: Sequelize.STRING,
         allowNull: false
     },
+
+
+
+
+
+//possible problem with get
     urlTitle: {
         type: Sequelize.STRING,
         allowNull: false,
-        isUrl: true
-    },
+        isUrl: true,
+        get: function(){
+          var wiki = '/wiki/'
+          return wiki + this.getDataValue(urlTitle)
+        }
+      },
     content: {
         type: Sequelize.TEXT,
         allowNull: false
@@ -19,19 +29,33 @@ var Page = db.define('page', {
     status: {
         type: Sequelize.ENUM('open', 'closed'),
         allowNull: true
-    }
+    },
+
+    date: {
+       type: Sequelize.DATE,
+       defaultValue: Sequelize.NOW
+   }
+
+
 });
 
 var User = db.define('user', {
     name: {
-        isAlphanumeric: true,
+        validate:{
+          isAlphanumeric: true
+        },
+
         type: Sequelize.STRING,
         allowNull: false
     },
     email: {
         type: Sequelize.STRING,
         allowNull: false,
-        isEmail: true
+
+        validate:{
+          isEmail: true
+
+        }
     }
 });
 

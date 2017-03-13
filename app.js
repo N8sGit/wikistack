@@ -31,6 +31,8 @@ app.use('/', routes);
 // start the server
 
 
+var test = 'Yoohoo'
+
 
 
 models.User.sync({})

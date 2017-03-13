@@ -8,7 +8,7 @@ var fs = require('fs');
 var path = require('path');
 // var mime = require('mime');
 var bodyParser = require('body-parser');
-var server = require('http').createServer()
+// var server = require('http').createServer()
 
 var models = require('./models');
 
@@ -38,7 +38,7 @@ models.User.sync({})
     return models.Page.sync({})
 })
 .then(function () {
-    server.listen(3000, function () {
+    app.listen(3000, function () {
         console.log('Server is listening on port 3001!');
     });
 })

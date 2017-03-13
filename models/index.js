@@ -62,7 +62,7 @@ var User = db.define('user', {
 });
 
 
-
+var test = 'yay'
 
 
 

@@ -9,19 +9,13 @@ var Page = db.define('page', {
     },
 
 
-
-
-
-//possible problem with get
     urlTitle: {
         type: Sequelize.STRING,
         allowNull: false,
-        isUrl: true,
-        get: function(){
-          var wiki = '/wiki/'
-          return wiki + this.getDataValue(urlTitle)
-        }
+        isUrl: true
       },
+
+
     content: {
         type: Sequelize.TEXT,
         allowNull: false
@@ -36,8 +30,16 @@ var Page = db.define('page', {
        defaultValue: Sequelize.NOW
    }
 
+ },
 
-});
+ {
+        getterMethods: {
+            url : function(){
+            var wiki = '/wiki/'
+            return wiki + this.urlTitle
+            }
+          }
+ });
 
 var User = db.define('user', {
     name: {
@@ -58,6 +60,11 @@ var User = db.define('user', {
         }
     }
 });
+
+
+
+
+
 
 
 module.exports = {
